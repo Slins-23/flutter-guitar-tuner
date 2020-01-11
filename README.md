@@ -1,6 +1,6 @@
-# tuner
+# Flutter Guitar Tuner
 
-A new Flutter project.
+My first (and currently only) Flutter project.
 
 ## Getting Started
 
