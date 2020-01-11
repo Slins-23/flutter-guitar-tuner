@@ -40,6 +40,10 @@ In order to not extend myself here (if you want to find out exactly how the plug
 
 For specifics about the data to be detected, check the "Settings" implementation below:
 
+
+
+
+
 #### Settings
 
 A relatively simple settings widget, which just like this app (at the moment), is still pretty simple, in its early stages, functional and intuitive - but not "pretty".
