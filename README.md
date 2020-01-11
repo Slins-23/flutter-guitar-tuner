@@ -67,7 +67,7 @@ A relatively simple settings widget, which just like this app (at the moment), i
 2. ##### Custom Tuning
 
     <img src="https://i.imgur.com/hUxWYRv.png" width="250">
-    <img src="https://i.imgur.com/DE07Jkq.png" width="250">
+    <img src="https://i.imgur.com/M6NGFeN.png" width="250">
 
     Lets you create your own tuning target, which creates a new entry in the tuning picker.
 
