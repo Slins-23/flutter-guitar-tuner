@@ -6,7 +6,7 @@
 
 **Flutter project has to be created using Java & Objective-C**
 
-<img src="https://i.imgur.com/DE07Jkq.png" width="200" height="550">
+<img src="https://i.imgur.com/DE07Jkq.png" width="300">
 
 My first (and currently only) Flutter project.
 
