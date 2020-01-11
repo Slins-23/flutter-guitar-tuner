@@ -38,12 +38,11 @@ After some research, I still couldn't find exactly what I needed, so I started t
 
 In order to not extend myself here (if you want to find out exactly how the plugin works, you can check it out at https://github.com/slins-23/flutter_fft), basically I built the platform channel storing the microphone stream and performed the pitch detection using the "TarsosDSP" Java library (https://github.com/JorenSix/TarsosDSP), which is a very nice library for audio processing.
 
-For specifics about the data to be detected, check the "Settings" implementation below:
-
-<br>
-<br>
-<br>
-
+For specifics about the data to be detected, check the "Settings" implementation below:  
+  
+  
+  
+  
 #### Settings
 
 A relatively simple settings widget, which just like this app (at the moment), is still pretty simple, in its early stages, functional and intuitive - but not "pretty".
