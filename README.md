@@ -6,6 +6,8 @@
 
 **Flutter project has to be created using Java & Objective-C**
 
+![Homepage](https://i.imgur.com/DE07Jkq.png)
+
 My first (and currently only) Flutter project.
 
 When I started this project, I had just recently bought my first guitar.
@@ -37,6 +39,10 @@ Features that have been implemented and features that have yet to be implemented
 
 #### Tuner
 
+![Perfect](https://i.imgur.com/9vec5HW.png)
+![Loosen](https://i.imgur.com/dLdB5BL.png)
+![Strengthen](https://i.imgur.com/y2C5Cy8.png)
+
 The main functionality of the application.
 It was tricky to come up with it, since Flutter does not provide support for some device capabilities, one of them being the microphone, which obviously is the most important piece.
 
@@ -48,6 +54,8 @@ For specifics about the data to be detected, check the "Settings" implementation
   
 #### Settings
 
+![Settings](https://i.imgur.com/2lyIydh.png)
+
 A relatively simple settings widget, which just like this app (at the moment), is still pretty simple, in its early stages, functional and intuitive - but not "pretty".
 
 #### Contents
@@ -57,6 +65,9 @@ A relatively simple settings widget, which just like this app (at the moment), i
     Select the tuning target.
 
 2. ##### Custom Tuning
+
+    ![Tuner-Step1](https://i.imgur.com/hUxWYRv.png)
+    ![Tuner-Step2](https://i.imgur.com/M6NGFeN.png)
 
     Lets you create your own tuning target, which creates a new entry in the tuning picker.
 
