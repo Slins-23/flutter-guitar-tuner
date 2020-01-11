@@ -40,9 +40,9 @@ In order to not extend myself here (if you want to find out exactly how the plug
 
 For specifics about the data to be detected, check the "Settings" implementation below:
 
-
-
-
+<br>
+<br>
+<br>
 
 #### Settings
 
