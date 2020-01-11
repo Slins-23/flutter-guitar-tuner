@@ -2,7 +2,7 @@
 
 **Warning:** *Currently works only on Android! This application uses a custom-made plugin (which I named "flutter_fft"), which makes use of platform channels. Platform channels are means for you to call native platform code (Java -> Android | Objective-C/Swift -> iOS) and integrate them with Flutter. I have made and tested this plugin only in Java, in other words, on Android. Key functionalities rely on the platform channel, such as audio capturing from the microphone*
 
-**The app was developed and tested in a Pixel 2 emulator, API 29. Does not work in iOS at the moment due to the platform channel having yet to be implemented.**
+**The app was developed and tested in a Pixel 2 emulator, API 29. Does not work on iOS at the moment due to the platform channel having yet to be implemented.**
 
 My first (and currently only) Flutter project.
 
