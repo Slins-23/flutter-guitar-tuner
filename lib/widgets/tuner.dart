@@ -1,7 +1,5 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:tuner/colors/dark_colors.dart';
-import 'package:tuner/colors/light_colors.dart';
 import 'package:tuner/settings/tuning_picker.dart';
 import 'package:tuner/extensions/tuner_extension.dart';
 

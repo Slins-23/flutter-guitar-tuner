@@ -23,7 +23,7 @@ Another reason is the bloatware and ADS in the application, which won't be in my
 
 I took that as an opportunity to program my first mobile application, specifically an android application at the moment, and learn Flutter/Dart in the process, which is something I have had in my mind for a couple of months.
 
-* I had to make some changes to Flutter's default widget code in "stepper.dart" at /flutter/packages/flutter/lib/src/material/stepper.dart - If you want to rebuild the code you will need to replace the original file with the one found in this repository, at this repository: "intricacies/flutter-widgets/stepper.dart"
+* I made some changes to Flutter's default widget "stepper.dart" at /flutter/packages/flutter/lib/src/material/stepper.dart - If you want to rebuild the code you will need to replace the original file with the one found in this repository, at this repository: "intricacies/flutter-widgets/stepper.dart"
 
 ## Features
 
