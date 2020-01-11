@@ -4,6 +4,8 @@
 
 **The app was developed and tested in a Pixel 2 emulator, API 29. Does not work on iOS at the moment due to the platform channel having yet to be implemented.**
 
+**Flutter project has to be created using Java & Objective-C**
+
 My first (and currently only) Flutter project.
 
 When I started this project, I had just recently bought my first guitar.
