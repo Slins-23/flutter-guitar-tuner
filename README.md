@@ -6,7 +6,7 @@
 
 **Flutter project has to be created using Java & Objective-C**
 
-![Homepage](https://i.imgur.com/DE07Jkq.png=500x500)
+![Homepage](https://i.imgur.com/DE07Jkq.png=200x200)
 
 My first (and currently only) Flutter project.
 
