@@ -23,6 +23,8 @@ Another reason is the bloatware and ADS in the application, which won't be in my
 
 I took that as an opportunity to program my first mobile application, specifically an android application at the moment, and learn Flutter/Dart in the process, which is something I have had in my mind for a couple of months.
 
+* I had to make some changes to Flutter's default widget code in "stepper.dart" at /flutter/packages/flutter/lib/src/material/stepper.dart - If you want to rebuild the code you will need to replace the original file with the one found in this repository, at this repository: "intricacies/flutter-widgets/stepper.dart"
+
 ## Features
 
 Features that have been implemented and features that have yet to be implemented.
@@ -38,10 +40,7 @@ After some research, I still couldn't find exactly what I needed, so I started t
 
 In order to not extend myself here (if you want to find out exactly how the plugin works, you can check it out at https://github.com/slins-23/flutter_fft), basically I built the platform channel storing the microphone stream and performed the pitch detection using the "TarsosDSP" Java library (https://github.com/JorenSix/TarsosDSP), which is a very nice library for audio processing.
 
-For specifics about the data to be detected, check the "Settings" implementation below:  
-  
-  
-  
+For specifics about the data to be detected, check the "Settings" implementation below.
   
 #### Settings
 
@@ -53,7 +52,58 @@ A relatively simple settings widget, which just like this app (at the moment), i
  
     Select the tuning target.
 
-2. ##### Channels
+2. ##### Custom Tuning
+
+    Lets you create your own tuning target, which creates a new entry in the tuning picker.
+
+3. ##### Interval
+
+    Interval in which the plugin's detection API gets called.
+
+4. ##### Tolerance
+
+    How far apart can the current frequency and the target/in-tune frequency be in order to be considered "On Pitch".
+
+6. ##### Sample Rate
+
+    Sample rate to be processed.
+
+7. ##### Channels
+
     Number of channels to be processed.
 
+8. ##### Theme Changer
+
+    Simple theme switch, Ligth/Dark only currently.
+
+9. ##### Help
+
+    Just some boilerplate "help" dialog for whenever I put it to use.
+
+10. ##### Reset
+
+    Resets all the settings to default.
+
+### Yet to implement
+
+#### iOS Version/Platform Channel
+
+Although flutter only has one dart codebase, I made my own custom plugin for this application, which uses a platform channel. 
+Platform channels are programmed in native code. Since I only made the Java/Android version, the app has no functionality on iOS and does NOT work, as I still have to make the Objective-C/Swift version.
+Will implement this whenever I get back to this project.
+
+#### String-by-string Tuner
+
+String-by-string version of the tuner. Currently only implemented one tuner, which is chromatic.
+
+#### Metronome
+
+Make a metronome.
+
 ## Bugs to fix
+
+1. Make a proper testing system;
+2. When it's the first time the app is opened in the user's device, it does not start recording straight away, needing a restart to properly work;
+3. The settings that have both a slider and text fields as inputs are incosistent with each other;
+4. App randomly closes sometimes on the Android Emulator (haven't encountered this issue on the actual Android device);
+5. 
