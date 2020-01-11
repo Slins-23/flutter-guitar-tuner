@@ -1,6 +1,8 @@
+# Flutter Guitar Tuner
+
 **Warning:** *Currently works only on Android! This application uses a custom-made plugin (which I named "flutter_fft"), which makes use of platform channels. Platform channels are means for you to call native platform code (Java -> Android | Objective-C/Swift -> iOS) and integrate them with Flutter. I have made and tested this plugin only in Java, in other words, on Android. Key functionalities rely on the platform channel, such as audio capturing from the microphone*
 
-# Flutter Guitar Tuner
+**The app was developed and tested in a Pixel 2 emulator, API 29. Does not work in iOS at the moment due to the platform channel having yet to be implemented.**
 
 My first (and currently only) Flutter project.
 
@@ -64,23 +66,23 @@ A relatively simple settings widget, which just like this app (at the moment), i
 
     How far apart can the current frequency and the target/in-tune frequency be in order to be considered "On Pitch".
 
-6. ##### Sample Rate
+5. ##### Sample Rate
 
     Sample rate to be processed.
 
-7. ##### Channels
+6. ##### Channels
 
     Number of channels to be processed.
 
-8. ##### Theme Changer
+7. ##### Theme Changer
 
     Simple theme switch, Ligth/Dark only currently.
 
-9. ##### Help
+8. ##### Help
 
     Just some boilerplate "help" dialog for whenever I put it to use.
 
-10. ##### Reset
+9. ##### Reset
 
     Resets all the settings to default.
 
@@ -88,9 +90,28 @@ A relatively simple settings widget, which just like this app (at the moment), i
 
 #### iOS Version/Platform Channel
 
-Although flutter only has one dart codebase, I made my own custom plugin for this application, which uses a platform channel. 
+Although flutter only has one dart codebase, I made my own custom plugin for this application, which uses a platform channel.
+
 Platform channels are programmed in native code. Since I only made the Java/Android version, the app has no functionality on iOS and does NOT work, as I still have to make the Objective-C/Swift version.
 Will implement this whenever I get back to this project.
+
+#### Web and desktop versions
+
+Make web and desktop versions of the applications.
+
+#### Rust + WebAssembly + Native JavaScript mobile framework
+
+Possibly learn Rust, WebAssembly and a JS mobile framework, such as React Native / Vue Native to recreate the application.
+
+I find Flutter not very flexible and pretty restrictive in its current state. I also dislike its widget system, since it's extremely hard on the eyes, not very readable, too much identation/nesting, state management is also quite confusing.
+
+It's not easy to make a very customized application with Flutter.
+
+That's where JavaScript would play its part, due to not being nearly as restrictive as Flutter, having more libraries for animation, community support, etc.
+
+Rust (or C++) would play its part in the backend, handling all the processing for the pitch detection behind the scenes.
+
+Not only would this application be very flexible, but very portable as well.
 
 #### String-by-string Tuner
 
@@ -106,4 +127,4 @@ Make a metronome.
 2. When it's the first time the app is opened in the user's device, it does not start recording straight away, needing a restart to properly work;
 3. The settings that have both a slider and text fields as inputs are incosistent with each other;
 4. App randomly closes sometimes on the Android Emulator (haven't encountered this issue on the actual Android device);
-5. 
+5. Haven't tested other emulators/devices for possible rendering and positioning issues, as well as hardware limitations;
