@@ -1,4 +1,4 @@
-<manifest xmlns:android="http://schemas.android.com/apk/res/android" package="com.slins.tuner">
+<manifest xmlns:tools="http://schemas.android.com/tools" xmlns:android="http://schemas.android.com/apk/res/android" package="com.slins.tuner">
     <!-- io.flutter.app.FlutterApplication is an android.app.Application that
          calls FlutterMain.startInitialization(this); in its onCreate method.
          In most cases you can leave this as-is, but you if you want to provide
@@ -18,4 +18,5 @@
              This is used by the Flutter tool to generate GeneratedPluginRegistrant.java -->
         <meta-data android:name="io.flutter.app.android.SplashScreenUntilFirstFrame" android:value="true" />
     </application>
+    <meta-data tools:replace="android:value" android:name="com.google.android.gms.ads.APPLICATION_ID" android:value="ca-app-pub-7722925098392318~6316197342"/>
 </manifest>
