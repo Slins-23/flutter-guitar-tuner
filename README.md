@@ -48,7 +48,9 @@ It was tricky to come up with it, since Flutter does not provide support for som
 
 After some research, I still couldn't find exactly what I needed, so I started to look into platform channels, which is what I ended up going with, since some plugins I found were outdated, and Flutter doesn't have great support for this, as I mentioned.
 
-In order to not extend myself here (if you want to find out exactly how the plugin works, you can check it out at https://github.com/slins-23/flutter-fft), basically I built the platform channel storing the microphone stream and performed the pitch detection using the "TarsosDSP" Java library (https://github.com/JorenSix/TarsosDSP), which is a very nice library for audio processing.
+In order to not extend myself here (if you want to find out exactly how the plugin works, you can check it out at https://github.com/slins-23/flutter-fft, and get it at ### Plugin at pub-dev
+https://pub.dev/packages/flutter_fft. 
+Basically I built the platform channel storing the microphone stream and performed the pitch detection using the "TarsosDSP" Java library (https://github.com/JorenSix/TarsosDSP), which is a very nice library for audio processing.
 
 For specifics about the data to be detected, check the "Settings" implementation below.
   
