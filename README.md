@@ -1,4 +1,4 @@
-***Warning:*** *Currently works only on Android, this application uses a custom-made plugin, which makes use of platform channels. Platform channels are means for you to call native platform code (Java -> Android | Objective-C/Swift -> iOS) and integrate them with Flutter. I have made and tested this plugin only in Java, in other words, on Android. Key functionalities rely on the platform channel, such as audio capturing from the microphone*
+**Warning:** ***Currently works only on Android, this application uses a custom-made plugin, which makes use of platform channels. Platform channels are means for you to call native platform code (Java -> Android | Objective-C/Swift -> iOS) and integrate them with Flutter. I have made and tested this plugin only in Java, in other words, on Android. Key functionalities rely on the platform channel, such as audio capturing from the microphone***
 
 # Flutter Guitar Tuner
 
