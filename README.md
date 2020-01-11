@@ -88,6 +88,10 @@ A relatively simple settings widget, which just like this app (at the moment), i
 
 ### Yet to implement
 
+#### Make a pretty UI, animations, improve usability
+
+The app is currently very raw, although usable. (Hence why I just uploaded it, because it's actually usable)
+
 #### iOS Version/Platform Channel
 
 Although flutter only has one dart codebase, I made my own custom plugin for this application, which uses a platform channel.
@@ -117,9 +121,21 @@ Not only would this application be very flexible, but very portable as well.
 
 String-by-string version of the tuner. Currently only implemented one tuner, which is chromatic.
 
+#### Add more default tuning options
+
+The only tuning options currently is the standard tuning and a testing tuning.
+
+#### Make my own pitch detector and improve algorithm speed
+
+Currently using an implementation from the "TarsosDSP" Java library, and my custom-made plugin that needs refactoring.
+
 #### Metronome
 
 Make a metronome.
+
+#### Improve theming and add custom-made user themes
+
+Allow users to create their own themes. Maybe in the future have an API to where users can share/download themes between themselves? - If everything goes as planned, this feature might be paid and not uploaded to this repository;
 
 ## Bugs to fix
 
