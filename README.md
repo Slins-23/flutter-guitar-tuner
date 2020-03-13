@@ -105,7 +105,7 @@ A relatively simple settings widget, which just like this app (at the moment), i
 
 #### Make a pretty UI, animations, improve usability
 
-The app is currently very raw, although usable. (Hence why I just uploaded it, because it's actually usable)
+The app is currently very raw, although usable. (Hence why I uploaded it, as it stands usable)
 
 #### iOS Version/Platform Channel
 
