@@ -103,6 +103,9 @@ A relatively simple settings widget, which just like this app (at the moment), i
 
 ### Yet to implement
 
+#### Testing
+Tests are not yet implemented.
+
 #### Make a pretty UI, animations, improve usability
 
 The app is currently very raw, although usable. (Hence why I uploaded it, as it stands usable, and probably useful for someone else provided they intend to make something similar to this, by using this as a reference)
@@ -153,9 +156,7 @@ Make a metronome.
 Allow users to create their own themes. Maybe in the future have an API to where users can share/download themes between themselves? - If everything goes as planned, this feature might be paid and not uploaded to this repository;
 
 ## Bugs to fix
-
-1. Make a proper testing system;
-2. When it's the first time the app is opened in the user's device, it does not start recording straight away, needing a restart to properly work;
-3. The settings that have both a slider and text fields as inputs are incosistent with each other;
-4. App randomly closes sometimes on the Android Emulator (haven't encountered this issue on the actual Android device);
-5. Haven't tested other emulators/devices for possible rendering and positioning issues, as well as hardware limitations;
+1. When it's the first time the app is opened in the user's device, it does not start recording straight away, needing a restart to properly work;
+2. The settings that have both a slider and text fields as inputs are incosistent with each other;
+3. App randomly closes sometimes on the Android Emulator (haven't encountered this issue on the actual Android device);
+4. Haven't tested other emulators/devices for possible rendering and positioning issues, as well as hardware limitations;
