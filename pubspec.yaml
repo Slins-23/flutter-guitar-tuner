@@ -12,8 +12,7 @@ dependencies:
   cupertino_icons: ^0.1.2
   bloc: ^3.0.0
   flutter_bloc: ^3.0.0
-  flutter_fft:
-     path: ../../Plugins/flutter_fft
+  flutter_fft: ^1.0.1
   equatable: ^1.0.1
   provider: ^4.0.1
   shared_preferences: ^0.5.6
