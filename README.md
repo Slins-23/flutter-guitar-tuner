@@ -157,5 +157,8 @@ Allow users to create their own themes.
 1. The settings that have both a slider and text fields as inputs are incosistent with each other;
 2. Haven't tested other emulators/devices for possible rendering and positioning issues, as well as hardware limitations
 3. Font doesn't render octaves greater than 4;
-4. When adding a new tuning containing too many strings/big letters, the dropdown button overflows
-5. Native stepper customization, currently relies on modifying a base Flutter dart file;
+4. When adding a new tuning containing too many strings/big letters, the dropdown button overflows;
+5. Faded settings sliders;
+6. Tuning target text;
+7. Stepper buttons background color;
+8. Native stepper customization, currently relies on modifying a base Flutter dart file
