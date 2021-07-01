@@ -12,7 +12,7 @@ class IntervalDuration extends StatefulWidget {
 }
 
 class IntervalDurationState extends State<IntervalDuration> {
-  static double sliderValue;
+  static double? sliderValue;
   dynamic result;
   static TextEditingController textEditingController =
       new TextEditingController();
@@ -33,7 +33,7 @@ class IntervalDurationState extends State<IntervalDuration> {
               flex: 5,
               child: Text(
                 "Detection interval",
-                style: Theme.of(context).textTheme.display4,
+                style: Theme.of(context).textTheme.headline1,
               ),
             ),
             Expanded(
@@ -54,7 +54,7 @@ class IntervalDurationState extends State<IntervalDuration> {
                               () => {
                                 sliderValue = double.parse(result),
                                 globals.flutterFft.setSubscriptionDuration =
-                                    sliderValue,
+                                    sliderValue!,
                               },
                             ),
                             await _updateData(),
@@ -65,7 +65,7 @@ class IntervalDurationState extends State<IntervalDuration> {
                           }
                       },
                       maxLength: 6,
-                      style: Theme.of(context).textTheme.display3.copyWith(
+                      style: Theme.of(context).textTheme.headline2!.copyWith(
                             color: Theme.of(context).primaryColor ==
                                     Themes.dark.primaryColor
                                 ? DarkTunerColors.gray
@@ -100,7 +100,7 @@ class IntervalDurationState extends State<IntervalDuration> {
   _updateData() async {
     final prefs = await SharedPreferences.getInstance();
     final key = "Interval";
-    await prefs.setDouble(key, sliderValue);
+    await prefs.setDouble(key, sliderValue!);
   }
 
   dynamic validated(String txt) {

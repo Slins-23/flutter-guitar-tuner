@@ -15,7 +15,7 @@ class Tuner extends StatelessWidget {
             child: Padding(
               padding: const EdgeInsets.only(top: 100.0),
               child: BlocBuilder<TunerBloc, TunerState>(
-                condition: (previousState, state) =>
+                buildWhen: (previousState, state) =>
                     state.runtimeType != previousState.runtimeType,
                 builder: (context, state) {
                   return Column(
@@ -50,8 +50,11 @@ class Tuner extends StatelessWidget {
     );
   }
 
-  List<Widget> _mapStateToButtons({TunerBloc tunerBloc, BuildContext context}) {
+  List<Widget> _mapStateToButtons(
+      {required TunerBloc tunerBloc, required BuildContext context}) {
     final TunerState currentState = tunerBloc.state;
+    final raisedButtonStyle = ElevatedButton.styleFrom(
+        padding: EdgeInsets.all(8.0), primary: Theme.of(context).buttonColor);
 
     if (currentState is Ready) {
       return [
@@ -63,11 +66,11 @@ class Tuner extends StatelessWidget {
               color: Colors.black.withAlpha(150),
             ),
           ]),
-          child: RaisedButton(
-            padding: EdgeInsets.all(8.0),
+          child: ElevatedButton(
+            style: raisedButtonStyle,
             child: Text(
               "Ready",
-              style: Theme.of(context).textTheme.button.copyWith(
+              style: Theme.of(context).textTheme.button!.copyWith(
                     color: Colors.green,
                   ),
             ),
@@ -76,7 +79,6 @@ class Tuner extends StatelessWidget {
                 Start(),
               );
             },
-            color: Theme.of(context).buttonColor,
           ),
         ),
       ];
@@ -90,11 +92,11 @@ class Tuner extends StatelessWidget {
               color: Colors.black.withAlpha(150),
             ),
           ]),
-          child: RaisedButton(
-            padding: EdgeInsets.all(8.0),
+          child: ElevatedButton(
+            style: raisedButtonStyle,
             child: Text(
               "Stop",
-              style: Theme.of(context).textTheme.button.copyWith(
+              style: Theme.of(context).textTheme.button!.copyWith(
                     color: Colors.red,
                   ),
             ),
@@ -103,7 +105,6 @@ class Tuner extends StatelessWidget {
                 Stop(),
               );
             },
-            color: Theme.of(context).buttonColor,
           ),
         ),
       ];
@@ -118,11 +119,11 @@ class Tuner extends StatelessWidget {
               color: Colors.black.withAlpha(150),
             ),
           ]),
-          child: RaisedButton(
-            padding: EdgeInsets.all(8.0),
+          child: ElevatedButton(
+            style: raisedButtonStyle,
             child: Text(
               "Restart",
-              style: Theme.of(context).textTheme.button.copyWith(
+              style: Theme.of(context).textTheme.button!.copyWith(
                     color: Theme.of(context).primaryColor,
                   ),
             ),
@@ -131,7 +132,6 @@ class Tuner extends StatelessWidget {
                 Stop(),
               );
             },
-            color: Theme.of(context).buttonColor,
           ),
         ),
       ];
@@ -140,14 +140,15 @@ class Tuner extends StatelessWidget {
     return [];
   }
 
-  Widget _mapStateToNote({TunerBloc tunerBloc, BuildContext context}) {
+  Widget _mapStateToNote(
+      {required TunerBloc tunerBloc, required BuildContext context}) {
     final TunerState currentState = tunerBloc.state;
 
-    String instruction;
-    Color instructionColor;
+    String? instruction;
+    Color? instructionColor;
 
     if (currentState is Running) {
-      double dist = currentState.frequency - currentState.target;
+      double dist = currentState.frequency! - currentState.target!;
       if (dist < 0) {
         instruction = "Strengthen string by";
         instructionColor = Colors.orange;
@@ -159,7 +160,7 @@ class Tuner extends StatelessWidget {
         instructionColor = Colors.green;
       }
 
-      return currentState.isOnPitch
+      return currentState.isOnPitch!
           ? Column(
               children: <Widget>[
                 Container(
@@ -169,7 +170,7 @@ class Tuner extends StatelessWidget {
                   ),
                   child: Text(
                     "On Pitch!",
-                    style: Theme.of(context).textTheme.display1.copyWith(
+                    style: Theme.of(context).textTheme.headline4!.copyWith(
                           fontSize: 35,
                           letterSpacing: -1,
                           fontFamily: 'Eczar',
@@ -193,7 +194,7 @@ class Tuner extends StatelessWidget {
                   children: <Widget>[
                     Text(
                       "Perfect tuning is",
-                      style: Theme.of(context).textTheme.display1.copyWith(
+                      style: Theme.of(context).textTheme.headline4!.copyWith(
                             fontSize: 22,
                             letterSpacing: -1,
                             fontFamily: 'Roboto',
@@ -211,7 +212,7 @@ class Tuner extends StatelessWidget {
                         dist > 0
                             ? "-${dist.abs().toStringAsFixed(2)}"
                             : "+${dist.abs().toStringAsFixed(2)}",
-                        style: Theme.of(context).textTheme.display2.copyWith(
+                        style: Theme.of(context).textTheme.headline3!.copyWith(
                               fontSize: 30,
                               fontWeight: FontWeight.w600,
                               fontFamily: 'Roboto',
@@ -224,7 +225,7 @@ class Tuner extends StatelessWidget {
                     ),
                     Text(
                       "away!",
-                      style: Theme.of(context).textTheme.display1.copyWith(
+                      style: Theme.of(context).textTheme.headline4!.copyWith(
                             fontSize: 22,
                             letterSpacing: -1,
                             fontFamily: 'Roboto',
@@ -242,7 +243,7 @@ class Tuner extends StatelessWidget {
                   children: <Widget>[
                     Text(
                       "Note:",
-                      style: Theme.of(context).textTheme.display1.copyWith(
+                      style: Theme.of(context).textTheme.headline4!.copyWith(
                             color: Colors.green,
                           ),
                       textAlign: TextAlign.center,
@@ -252,10 +253,10 @@ class Tuner extends StatelessWidget {
                     ),
                     Container(
                       child: Text(
-                        currentState.note +
+                        currentState.note! +
                             TuningPickerState.octaveToSuperscript(
                                 currentState.octave.toString()),
-                        style: Theme.of(context).textTheme.display1.copyWith(
+                        style: Theme.of(context).textTheme.headline4!.copyWith(
                               fontSize: 30,
                               fontFamily: 'Roboto',
                               color: Colors.green,
@@ -271,7 +272,7 @@ class Tuner extends StatelessWidget {
                     children: <Widget>[
                       Text(
                         "Frequency:",
-                        style: Theme.of(context).textTheme.display1.copyWith(
+                        style: Theme.of(context).textTheme.headline4!.copyWith(
                               color: Colors.green,
                             ),
                       ),
@@ -279,8 +280,8 @@ class Tuner extends StatelessWidget {
                         padding: EdgeInsets.only(left: 12.0),
                       ),
                       Text(
-                        currentState.frequency.toStringAsFixed(2),
-                        style: Theme.of(context).textTheme.display1.copyWith(
+                        currentState.frequency!.toStringAsFixed(2),
+                        style: Theme.of(context).textTheme.headline4!.copyWith(
                               fontFamily: 'Roboto',
                               color: Colors.green,
                             ),
@@ -306,9 +307,9 @@ class Tuner extends StatelessWidget {
                       alignment: Alignment.centerRight,
                       width: 225,
                       child: Text(
-                        instruction,
-                        style: Theme.of(context).textTheme.display1.copyWith(
-                            color: instructionColor.withAlpha(900),
+                        instruction!,
+                        style: Theme.of(context).textTheme.headline4!.copyWith(
+                            color: instructionColor!.withAlpha(900),
                             fontSize: 28,
                             letterSpacing: -1,
                             fontFamily: 'Roboto',
@@ -322,8 +323,8 @@ class Tuner extends StatelessWidget {
                     Container(
                       width: 100,
                       child: Text(
-                        currentState.distance.toStringAsFixed(2),
-                        style: Theme.of(context).textTheme.display2.copyWith(
+                        currentState.distance!.toStringAsFixed(2),
+                        style: Theme.of(context).textTheme.headline3!.copyWith(
                               color: instructionColor,
                               fontFamily: 'Roboto',
                               fontSize: 30,
@@ -340,7 +341,7 @@ class Tuner extends StatelessWidget {
                   children: <Widget>[
                     Text(
                       "Note:".padLeft(5),
-                      style: Theme.of(context).textTheme.display1.copyWith(
+                      style: Theme.of(context).textTheme.headline4!.copyWith(
                             color: instructionColor.withAlpha(900),
                             fontWeight: FontWeight.w200,
                           ),
@@ -352,10 +353,10 @@ class Tuner extends StatelessWidget {
                     Container(
                       width: 50,
                       child: Text(
-                        currentState.note +
+                        currentState.note! +
                             TuningPickerState.octaveToSuperscript(
                                 currentState.octave.toString()),
-                        style: Theme.of(context).textTheme.display1.copyWith(
+                        style: Theme.of(context).textTheme.headline4!.copyWith(
                               fontFamily: 'Roboto',
                               fontSize: 30,
                               color: instructionColor,
@@ -372,7 +373,7 @@ class Tuner extends StatelessWidget {
                     children: <Widget>[
                       Text(
                         "Frequency:",
-                        style: Theme.of(context).textTheme.display1.copyWith(
+                        style: Theme.of(context).textTheme.headline4!.copyWith(
                               color: instructionColor.withAlpha(900),
                               fontWeight: FontWeight.w200,
                             ),
@@ -384,12 +385,13 @@ class Tuner extends StatelessWidget {
                       Container(
                         width: 125,
                         child: Text(
-                          currentState.frequency.toStringAsFixed(2),
-                          style: Theme.of(context).textTheme.display1.copyWith(
-                                fontFamily: 'Roboto',
-                                fontSize: 30,
-                                color: instructionColor,
-                              ),
+                          currentState.frequency!.toStringAsFixed(2),
+                          style:
+                              Theme.of(context).textTheme.headline4!.copyWith(
+                                    fontFamily: 'Roboto',
+                                    fontSize: 30,
+                                    color: instructionColor,
+                                  ),
                         ),
                       ),
                     ],
@@ -403,7 +405,7 @@ class Tuner extends StatelessWidget {
                   children: <Widget>[
                     Text(
                       "Target note:",
-                      style: Theme.of(context).textTheme.display1.copyWith(
+                      style: Theme.of(context).textTheme.headline4!.copyWith(
                             color: Colors.green.withAlpha(900),
                             fontWeight: FontWeight.w200,
                           ),
@@ -415,10 +417,10 @@ class Tuner extends StatelessWidget {
                     Container(
                       width: 50,
                       child: Text(
-                        currentState.nearestNote +
+                        currentState.nearestNote! +
                             TuningPickerState.octaveToSuperscript(
                                 currentState.nearestOctave.toString()),
-                        style: Theme.of(context).textTheme.display1.copyWith(
+                        style: Theme.of(context).textTheme.headline4!.copyWith(
                               fontFamily: 'Roboto',
                               fontSize: 30,
                               color: Colors.green,
@@ -435,7 +437,7 @@ class Tuner extends StatelessWidget {
                     children: <Widget>[
                       Text(
                         "Target frequency:",
-                        style: Theme.of(context).textTheme.display1.copyWith(
+                        style: Theme.of(context).textTheme.headline4!.copyWith(
                               color: Colors.green.withAlpha(900),
                               fontWeight: FontWeight.w200,
                             ),
@@ -447,12 +449,13 @@ class Tuner extends StatelessWidget {
                       Container(
                         width: 125,
                         child: Text(
-                          currentState.nearestTarget.toStringAsFixed(2),
-                          style: Theme.of(context).textTheme.display1.copyWith(
-                                fontFamily: 'Roboto',
-                                fontSize: 30,
-                                color: Colors.green,
-                              ),
+                          currentState.nearestTarget!.toStringAsFixed(2),
+                          style:
+                              Theme.of(context).textTheme.headline4!.copyWith(
+                                    fontFamily: 'Roboto',
+                                    fontSize: 30,
+                                    color: Colors.green,
+                                  ),
                         ),
                       ),
                     ],
@@ -463,7 +466,10 @@ class Tuner extends StatelessWidget {
     } else if (currentState is Stopped || currentState is Ready) {
       return Text(
         "Waiting...",
-        style: Theme.of(context).textTheme.body2.copyWith(color: Colors.white),
+        style: Theme.of(context)
+            .textTheme
+            .bodyText1!
+            .copyWith(color: Colors.white),
       );
     } else {
       throw new Exception(

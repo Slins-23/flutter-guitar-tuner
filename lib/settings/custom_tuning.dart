@@ -2,6 +2,7 @@ import "package:flutter/material.dart";
 import 'package:provider/provider.dart';
 import "package:shared_preferences/shared_preferences.dart";
 import "package:tuner/blocs/custom_tuning_bloc.dart";
+import 'package:tuner/extensions/custom_classes.dart';
 
 class CustomTuning extends StatelessWidget {
   @override
@@ -31,7 +32,7 @@ class CustomTuning extends StatelessWidget {
                     padding: const EdgeInsets.only(right: 8.0),
                     child: Icon(
                       Icons.add_circle,
-                      color: Theme.of(context).textTheme.display4.color,
+                      color: Theme.of(context).textTheme.headline1!.color,
                       size: 25,
                     ),
                   ),
@@ -41,7 +42,7 @@ class CustomTuning extends StatelessWidget {
                 flex: 5,
                 child: Text(
                   "Add custom tuning",
-                  style: Theme.of(context).textTheme.display4,
+                  style: Theme.of(context).textTheme.headline1,
                 ),
               ),
             ],
@@ -62,22 +63,22 @@ class CustomTuning extends StatelessWidget {
 }
 
 class TuneCreation extends StatefulWidget {
-  final CustomTuningBloc tuningBloc;
+  final CustomTuningBloc? tuningBloc;
 
   const TuneCreation({@required this.tuningBloc});
   @override
-  TuneCreationState createState() => TuneCreationState(tuningBloc: tuningBloc);
+  TuneCreationState createState() => TuneCreationState(tuningBloc: tuningBloc!);
 }
 
 class TuneCreationState extends State<TuneCreation> {
-  final CustomTuningBloc tuningBloc;
+  final CustomTuningBloc? tuningBloc;
 
   TuneCreationState({@required this.tuningBloc});
 
   static int strings = 6;
 
-  List<String> notes = new List<String>(strings);
-  List<int> octaves = new List<int>(strings);
+  List<String> notes = [];
+  List<int> octaves = [];
 
   int currentStep = 0;
   bool firstComplete = false;
@@ -141,7 +142,7 @@ class TuneCreationState extends State<TuneCreation> {
       });
       goTo(1);
     } else if (currentStep == 1) {
-      List<String> tune = new List<String>(strings);
+      List<String> tune = List.filled(strings, "Q");
 
       notes = [
         note01,
@@ -175,7 +176,8 @@ class TuneCreationState extends State<TuneCreation> {
       for (int i = 0; i < strings; i++) {
         tune[i] = notes[i] + octaves[i].toString();
       }
-      await _updateData(tune);
+
+      await _updateData(TuningList(tune));
       close();
     } else {
       print("WRONG STEP.");
@@ -198,7 +200,7 @@ class TuneCreationState extends State<TuneCreation> {
               Step(
                 title: Text(
                   "Number of strings",
-                  style: Theme.of(context).textTheme.display4.copyWith(
+                  style: Theme.of(context).textTheme.headline1!.copyWith(
                         fontSize: 25,
                         fontFamily: "Roboto",
                       ),
@@ -214,13 +216,13 @@ class TuneCreationState extends State<TuneCreation> {
                         icon: Icon(Icons.arrow_drop_down),
                         iconSize: 25,
                         elevation: 16,
-                        style: Theme.of(context).textTheme.display4,
+                        style: Theme.of(context).textTheme.headline1,
                         underline: Container(height: 2, color: Colors.black),
-                        onChanged: (int newValue) {
+                        onChanged: (int? newValue) {
                           setState(() => {
-                                strings = newValue,
-                                notes = new List<String>(),
-                                octaves = new List<int>(),
+                                strings = newValue!,
+                                notes = [],
+                                octaves = [],
                               });
                         },
                         iconEnabledColor: Colors.black,
@@ -231,7 +233,7 @@ class TuneCreationState extends State<TuneCreation> {
                             child: Container(
                               child: Text(
                                 value.toString(),
-                                style: Theme.of(context).textTheme.display4,
+                                style: Theme.of(context).textTheme.headline1,
                               ),
                             ),
                           );
@@ -243,8 +245,8 @@ class TuneCreationState extends State<TuneCreation> {
               ),
               Step(
                 title: Text(
-                  "Notes and octaves",
-                  style: Theme.of(context).textTheme.display4.copyWith(
+                  "Notes and octaves (Highest to lowest)",
+                  style: Theme.of(context).textTheme.headline1!.copyWith(
                         fontSize: 25,
                         fontFamily: "Roboto",
                       ),
@@ -260,10 +262,10 @@ class TuneCreationState extends State<TuneCreation> {
                           Column(
                             children: <Widget>[
                               Text(
-                                "1st",
+                                "1st (Highest)",
                                 style: Theme.of(context)
                                     .textTheme
-                                    .display2
+                                    .headline3!
                                     .copyWith(fontSize: 13),
                               ),
                               Row(
@@ -274,11 +276,11 @@ class TuneCreationState extends State<TuneCreation> {
                                     iconSize: 25,
                                     elevation: 16,
                                     style: Theme.of(context).textTheme.caption,
-                                    underline:
-                                        Container(height: 1, color: Colors.black),
-                                    onChanged: (String newValue) {
+                                    underline: Container(
+                                        height: 1, color: Colors.black),
+                                    onChanged: (String? newValue) {
                                       setState(() => {
-                                            note01 = newValue,
+                                            note01 = newValue!,
                                           });
                                     },
                                     iconEnabledColor: Colors.black,
@@ -312,16 +314,17 @@ class TuneCreationState extends State<TuneCreation> {
                                     iconSize: 25,
                                     elevation: 16,
                                     style: Theme.of(context).textTheme.caption,
-                                    underline:
-                                        Container(height: 1, color: Colors.black),
-                                    onChanged: (int newValue) {
+                                    underline: Container(
+                                        height: 1, color: Colors.black),
+                                    onChanged: (int? newValue) {
                                       setState(() => {
-                                            octave01 = newValue,
+                                            octave01 = newValue!,
                                           });
                                     },
                                     iconEnabledColor: Colors.black,
                                     items: octaveArray
-                                        .map<DropdownMenuItem<int>>((int value) {
+                                        .map<DropdownMenuItem<int>>(
+                                            (int value) {
                                       return DropdownMenuItem<int>(
                                         value: value,
                                         child: Container(
@@ -354,7 +357,7 @@ class TuneCreationState extends State<TuneCreation> {
                                   "2nd",
                                   style: Theme.of(context)
                                       .textTheme
-                                      .display2
+                                      .headline3!
                                       .copyWith(fontSize: 13),
                                 ),
                                 Row(
@@ -364,12 +367,13 @@ class TuneCreationState extends State<TuneCreation> {
                                       icon: Icon(Icons.arrow_drop_down),
                                       iconSize: 25,
                                       elevation: 16,
-                                      style: Theme.of(context).textTheme.caption,
+                                      style:
+                                          Theme.of(context).textTheme.caption,
                                       underline: Container(
                                           height: 1, color: Colors.black),
-                                      onChanged: (String newValue) {
+                                      onChanged: (String? newValue) {
                                         setState(() => {
-                                              note02 = newValue,
+                                              note02 = newValue!,
                                             });
                                       },
                                       iconEnabledColor: Colors.black,
@@ -402,12 +406,13 @@ class TuneCreationState extends State<TuneCreation> {
                                       icon: Icon(Icons.arrow_drop_down),
                                       iconSize: 25,
                                       elevation: 16,
-                                      style: Theme.of(context).textTheme.caption,
+                                      style:
+                                          Theme.of(context).textTheme.caption,
                                       underline: Container(
                                           height: 1, color: Colors.black),
-                                      onChanged: (int newValue) {
+                                      onChanged: (int? newValue) {
                                         setState(() => {
-                                              octave02 = newValue,
+                                              octave02 = newValue!,
                                             });
                                       },
                                       iconEnabledColor: Colors.black,
@@ -449,7 +454,7 @@ class TuneCreationState extends State<TuneCreation> {
                                     "3rd",
                                     style: Theme.of(context)
                                         .textTheme
-                                        .display2
+                                        .headline3!
                                         .copyWith(fontSize: 13),
                                   ),
                                   Row(
@@ -463,9 +468,9 @@ class TuneCreationState extends State<TuneCreation> {
                                             Theme.of(context).textTheme.caption,
                                         underline: Container(
                                             height: 1, color: Colors.black),
-                                        onChanged: (String newValue) {
+                                        onChanged: (String? newValue) {
                                           setState(() => {
-                                                note03 = newValue,
+                                                note03 = newValue!,
                                               });
                                         },
                                         iconEnabledColor: Colors.black,
@@ -502,9 +507,9 @@ class TuneCreationState extends State<TuneCreation> {
                                             Theme.of(context).textTheme.caption,
                                         underline: Container(
                                             height: 1, color: Colors.black),
-                                        onChanged: (int newValue) {
+                                        onChanged: (int? newValue) {
                                           setState(() => {
-                                                octave03 = newValue,
+                                                octave03 = newValue!,
                                               });
                                         },
                                         iconEnabledColor: Colors.black,
@@ -546,7 +551,7 @@ class TuneCreationState extends State<TuneCreation> {
                                         "4th",
                                         style: Theme.of(context)
                                             .textTheme
-                                            .display2
+                                            .headline3!
                                             .copyWith(fontSize: 15),
                                       ),
                                       Row(
@@ -561,9 +566,9 @@ class TuneCreationState extends State<TuneCreation> {
                                                 .caption,
                                             underline: Container(
                                                 height: 1, color: Colors.black),
-                                            onChanged: (String newValue) {
+                                            onChanged: (String? newValue) {
                                               setState(() => {
-                                                    note04 = newValue,
+                                                    note04 = newValue!,
                                                   });
                                             },
                                             iconEnabledColor: Colors.black,
@@ -601,9 +606,9 @@ class TuneCreationState extends State<TuneCreation> {
                                                 .caption,
                                             underline: Container(
                                                 height: 1, color: Colors.black),
-                                            onChanged: (int newValue) {
+                                            onChanged: (int? newValue) {
                                               setState(() => {
-                                                    octave04 = newValue,
+                                                    octave04 = newValue!,
                                                   });
                                             },
                                             iconEnabledColor: Colors.black,
@@ -648,7 +653,7 @@ class TuneCreationState extends State<TuneCreation> {
                                     "5th",
                                     style: Theme.of(context)
                                         .textTheme
-                                        .display2
+                                        .headline3!
                                         .copyWith(fontSize: 13),
                                   ),
                                   Row(
@@ -662,9 +667,9 @@ class TuneCreationState extends State<TuneCreation> {
                                             Theme.of(context).textTheme.caption,
                                         underline: Container(
                                             height: 1, color: Colors.black),
-                                        onChanged: (String newValue) {
+                                        onChanged: (String? newValue) {
                                           setState(() => {
-                                                note05 = newValue,
+                                                note05 = newValue!,
                                               });
                                         },
                                         iconEnabledColor: Colors.black,
@@ -701,9 +706,9 @@ class TuneCreationState extends State<TuneCreation> {
                                             Theme.of(context).textTheme.caption,
                                         underline: Container(
                                             height: 1, color: Colors.black),
-                                        onChanged: (int newValue) {
+                                        onChanged: (int? newValue) {
                                           setState(() => {
-                                                octave05 = newValue,
+                                                octave05 = newValue!,
                                               });
                                         },
                                         iconEnabledColor: Colors.black,
@@ -743,7 +748,7 @@ class TuneCreationState extends State<TuneCreation> {
                                     "6th",
                                     style: Theme.of(context)
                                         .textTheme
-                                        .display2
+                                        .headline3!
                                         .copyWith(fontSize: 13),
                                   ),
                                   Row(
@@ -757,9 +762,9 @@ class TuneCreationState extends State<TuneCreation> {
                                             Theme.of(context).textTheme.caption,
                                         underline: Container(
                                             height: 1, color: Colors.black),
-                                        onChanged: (String newValue) {
+                                        onChanged: (String? newValue) {
                                           setState(() => {
-                                                note06 = newValue,
+                                                note06 = newValue!,
                                               });
                                         },
                                         iconEnabledColor: Colors.black,
@@ -796,9 +801,9 @@ class TuneCreationState extends State<TuneCreation> {
                                             Theme.of(context).textTheme.caption,
                                         underline: Container(
                                             height: 1, color: Colors.black),
-                                        onChanged: (int newValue) {
+                                        onChanged: (int? newValue) {
                                           setState(() => {
-                                                octave06 = newValue,
+                                                octave06 = newValue!,
                                               });
                                         },
                                         iconEnabledColor: Colors.black,
@@ -841,7 +846,7 @@ class TuneCreationState extends State<TuneCreation> {
                                     "7th",
                                     style: Theme.of(context)
                                         .textTheme
-                                        .display2
+                                        .headline3!
                                         .copyWith(fontSize: 13),
                                   ),
                                   Row(
@@ -855,9 +860,9 @@ class TuneCreationState extends State<TuneCreation> {
                                             Theme.of(context).textTheme.caption,
                                         underline: Container(
                                             height: 1, color: Colors.black),
-                                        onChanged: (String newValue) {
+                                        onChanged: (String? newValue) {
                                           setState(() => {
-                                                note07 = newValue,
+                                                note07 = newValue!,
                                               });
                                         },
                                         iconEnabledColor: Colors.black,
@@ -894,9 +899,9 @@ class TuneCreationState extends State<TuneCreation> {
                                             Theme.of(context).textTheme.caption,
                                         underline: Container(
                                             height: 1, color: Colors.black),
-                                        onChanged: (int newValue) {
+                                        onChanged: (int? newValue) {
                                           setState(() => {
-                                                octave07 = newValue,
+                                                octave07 = newValue!,
                                               });
                                         },
                                         iconEnabledColor: Colors.black,
@@ -938,7 +943,7 @@ class TuneCreationState extends State<TuneCreation> {
                                         "8th",
                                         style: Theme.of(context)
                                             .textTheme
-                                            .display2
+                                            .headline3!
                                             .copyWith(fontSize: 15),
                                       ),
                                       Row(
@@ -953,9 +958,9 @@ class TuneCreationState extends State<TuneCreation> {
                                                 .caption,
                                             underline: Container(
                                                 height: 1, color: Colors.black),
-                                            onChanged: (String newValue) {
+                                            onChanged: (String? newValue) {
                                               setState(() => {
-                                                    note08 = newValue,
+                                                    note08 = newValue!,
                                                   });
                                             },
                                             iconEnabledColor: Colors.black,
@@ -993,9 +998,9 @@ class TuneCreationState extends State<TuneCreation> {
                                                 .caption,
                                             underline: Container(
                                                 height: 1, color: Colors.black),
-                                            onChanged: (int newValue) {
+                                            onChanged: (int? newValue) {
                                               setState(() => {
-                                                    octave08 = newValue,
+                                                    octave08 = newValue!,
                                                   });
                                             },
                                             iconEnabledColor: Colors.black,
@@ -1040,7 +1045,7 @@ class TuneCreationState extends State<TuneCreation> {
                                     "9th",
                                     style: Theme.of(context)
                                         .textTheme
-                                        .display2
+                                        .headline3!
                                         .copyWith(fontSize: 13),
                                   ),
                                   Row(
@@ -1054,9 +1059,9 @@ class TuneCreationState extends State<TuneCreation> {
                                             Theme.of(context).textTheme.caption,
                                         underline: Container(
                                             height: 1, color: Colors.black),
-                                        onChanged: (String newValue) {
+                                        onChanged: (String? newValue) {
                                           setState(() => {
-                                                note09 = newValue,
+                                                note09 = newValue!,
                                               });
                                         },
                                         iconEnabledColor: Colors.black,
@@ -1093,9 +1098,9 @@ class TuneCreationState extends State<TuneCreation> {
                                             Theme.of(context).textTheme.caption,
                                         underline: Container(
                                             height: 1, color: Colors.black),
-                                        onChanged: (int newValue) {
+                                        onChanged: (int? newValue) {
                                           setState(() => {
-                                                octave09 = newValue,
+                                                octave09 = newValue!,
                                               });
                                         },
                                         iconEnabledColor: Colors.black,
@@ -1135,7 +1140,7 @@ class TuneCreationState extends State<TuneCreation> {
                                     "10th",
                                     style: Theme.of(context)
                                         .textTheme
-                                        .display2
+                                        .headline3!
                                         .copyWith(fontSize: 13),
                                   ),
                                   Row(
@@ -1149,9 +1154,9 @@ class TuneCreationState extends State<TuneCreation> {
                                             Theme.of(context).textTheme.caption,
                                         underline: Container(
                                             height: 1, color: Colors.black),
-                                        onChanged: (String newValue) {
+                                        onChanged: (String? newValue) {
                                           setState(() => {
-                                                note10 = newValue,
+                                                note10 = newValue!,
                                               });
                                         },
                                         iconEnabledColor: Colors.black,
@@ -1188,9 +1193,9 @@ class TuneCreationState extends State<TuneCreation> {
                                             Theme.of(context).textTheme.caption,
                                         underline: Container(
                                             height: 1, color: Colors.black),
-                                        onChanged: (int newValue) {
+                                        onChanged: (int? newValue) {
                                           setState(() => {
-                                                octave10 = newValue,
+                                                octave10 = newValue!,
                                               });
                                         },
                                         iconEnabledColor: Colors.black,
@@ -1233,7 +1238,7 @@ class TuneCreationState extends State<TuneCreation> {
                                     "11th",
                                     style: Theme.of(context)
                                         .textTheme
-                                        .display2
+                                        .headline3!
                                         .copyWith(fontSize: 13),
                                   ),
                                   Row(
@@ -1247,9 +1252,9 @@ class TuneCreationState extends State<TuneCreation> {
                                             Theme.of(context).textTheme.caption,
                                         underline: Container(
                                             height: 1, color: Colors.black),
-                                        onChanged: (String newValue) {
+                                        onChanged: (String? newValue) {
                                           setState(() => {
-                                                note11 = newValue,
+                                                note11 = newValue!,
                                               });
                                         },
                                         iconEnabledColor: Colors.black,
@@ -1286,9 +1291,9 @@ class TuneCreationState extends State<TuneCreation> {
                                             Theme.of(context).textTheme.caption,
                                         underline: Container(
                                             height: 1, color: Colors.black),
-                                        onChanged: (int newValue) {
+                                        onChanged: (int? newValue) {
                                           setState(() => {
-                                                octave11 = newValue,
+                                                octave11 = newValue!,
                                               });
                                         },
                                         iconEnabledColor: Colors.black,
@@ -1330,7 +1335,7 @@ class TuneCreationState extends State<TuneCreation> {
                                         "12th",
                                         style: Theme.of(context)
                                             .textTheme
-                                            .display2
+                                            .headline3!
                                             .copyWith(fontSize: 15),
                                       ),
                                       Row(
@@ -1345,9 +1350,9 @@ class TuneCreationState extends State<TuneCreation> {
                                                 .caption,
                                             underline: Container(
                                                 height: 1, color: Colors.black),
-                                            onChanged: (String newValue) {
+                                            onChanged: (String? newValue) {
                                               setState(() => {
-                                                    note12 = newValue,
+                                                    note12 = newValue!,
                                                   });
                                             },
                                             iconEnabledColor: Colors.black,
@@ -1385,9 +1390,9 @@ class TuneCreationState extends State<TuneCreation> {
                                                 .caption,
                                             underline: Container(
                                                 height: 1, color: Colors.black),
-                                            onChanged: (int newValue) {
+                                            onChanged: (int? newValue) {
                                               setState(() => {
-                                                    octave12 = newValue,
+                                                    octave12 = newValue!,
                                                   });
                                             },
                                             iconEnabledColor: Colors.black,
@@ -1445,24 +1450,24 @@ class TuneCreationState extends State<TuneCreation> {
           if (count < CustomTuningBloc.tuning.length)
             {
               jsonEncoded +=
-                  '"${count.toString()}": ["${tuning.reduce((value, element) => value + '"' + ", " + '"' + element)}"], ',
+                  '"${count.toString()}": ["${tuning.getList.reduce((value, element) => value + '"' + ", " + '"' + element)}"], ',
               count++,
             }
           else if (count == CustomTuningBloc.tuning.length)
             {
               jsonEncoded +=
-                  '"${count.toString()}": ["${tuning.reduce((value, element) => value + '"' + ", " + '"' + element)}"]}',
+                  '"${count.toString()}": ["${tuning.getList.reduce((value, element) => value + '"' + ", " + '"' + element)}"]}',
             }
         });
 
     return jsonEncoded;
   }
 
-  _updateData(List<String> tuning) async {
+  _updateData(TuningList tuning) async {
     //List<String> tuning = ["F1", "F2", "F3", "F4", "F5", "F6"];
 
     if (!CustomTuningBloc.tuning.toString().contains(tuning.toString())) {
-      tuningBloc.addTuning(tuning); // TUNING SET BY THE USER
+      tuningBloc!.addTuning(tuning); // TUNING SET BY THE USER
       final prefs = await SharedPreferences.getInstance();
       final key = "CustomTunings";
       await prefs.setString(key, _encodeJSON());

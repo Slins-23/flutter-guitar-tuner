@@ -12,7 +12,7 @@ class FrequencyTolerance extends StatefulWidget {
 }
 
 class FrequencyToleranceState extends State<FrequencyTolerance> {
-  static double sliderValue;
+  static double? sliderValue;
   dynamic result;
   static TextEditingController textEditingController =
       new TextEditingController();
@@ -33,26 +33,27 @@ class FrequencyToleranceState extends State<FrequencyTolerance> {
               flex: 5,
               child: Text(
                 "Tolerance",
-                style: Theme.of(context).textTheme.display4,
+                style: Theme.of(context).textTheme.headline1,
               ),
             ),
             Flexible(
-              flex: 16,
+              flex: 15,
               child: Slider(
                 onChanged: (newValue) {
                   setState(
                     () => {
                       sliderValue = newValue,
                       textEditingController.text =
-                          sliderValue.toStringAsFixed(2),
+                          sliderValue!.toStringAsFixed(2),
                     },
                   );
                 }, // UPDATE HERE
                 onChangeEnd: (_) async {
-                  setState(() => globals.flutterFft.setTolerance = sliderValue);
+                  setState(
+                      () => globals.flutterFft.setTolerance = sliderValue!);
                   await _updateData();
                 },
-                value: sliderValue, // SET NEW VALUE HERE
+                value: sliderValue!, // SET NEW VALUE HERE
                 max: 999,
                 min: 0,
                 activeColor: Theme.of(context).cardColor,
@@ -80,7 +81,7 @@ class FrequencyToleranceState extends State<FrequencyTolerance> {
                           setState(
                             () => {
                               sliderValue = double.parse(result),
-                              globals.flutterFft.setTolerance = sliderValue,
+                              globals.flutterFft.setTolerance = sliderValue!,
                             },
                           ),
                           await _updateDataString(),
@@ -91,7 +92,7 @@ class FrequencyToleranceState extends State<FrequencyTolerance> {
                         }
                     },
                     maxLength: 3,
-                    style: Theme.of(context).textTheme.display3.copyWith(
+                    style: Theme.of(context).textTheme.headline2!.copyWith(
                           color: Theme.of(context).primaryColor ==
                                   Themes.dark.primaryColor
                               ? DarkTunerColors.gray
@@ -125,13 +126,13 @@ class FrequencyToleranceState extends State<FrequencyTolerance> {
   _updateData() async {
     final prefs = await SharedPreferences.getInstance();
     final key = "Tolerance";
-    await prefs.setDouble(key, sliderValue);
+    await prefs.setDouble(key, sliderValue!);
   }
 
   _updateDataString() async {
     final prefs = await SharedPreferences.getInstance();
     final key = "Tolerance";
-    await prefs.setDouble(key, sliderValue);
+    await prefs.setDouble(key, sliderValue!);
   }
 
   dynamic validated(String txt) {

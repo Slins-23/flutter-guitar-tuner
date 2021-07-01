@@ -13,7 +13,7 @@ class Reset extends StatelessWidget {
               Flexible(
                 flex: 2,
                 child: Text("Reset settings to default",
-                    style: Theme.of(context).textTheme.display4),
+                    style: Theme.of(context).textTheme.headline1),
               ),
             ],
           ),

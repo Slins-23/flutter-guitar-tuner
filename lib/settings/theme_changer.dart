@@ -5,7 +5,7 @@ import "package:shared_preferences/shared_preferences.dart";
 
 class ThemeChanger extends StatelessWidget {
   final Themes themes = new Themes();
-  static String currentTheme;
+  static String? currentTheme;
 
   @override
   Widget build(BuildContext context) {
@@ -20,7 +20,7 @@ class ThemeChanger extends StatelessWidget {
               Flexible(
                 flex: 2,
                 child: Text("Change Theme to Light/Dark",
-                    style: Theme.of(context).textTheme.display4),
+                    style: Theme.of(context).textTheme.headline1),
               ),
             ],
           ),

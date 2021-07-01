@@ -12,7 +12,7 @@ class Help extends StatelessWidget {
               Flexible(
                 flex: 2,
                 child:
-                    Text("Help", style: Theme.of(context).textTheme.display4),
+                    Text("Help", style: Theme.of(context).textTheme.headline1),
               ),
             ],
           ),
@@ -32,7 +32,7 @@ class Help extends StatelessWidget {
   }
 
   void showAlertDialog(BuildContext context) {
-    Widget close = FlatButton(
+    Widget close = TextButton(
       child: Text(
         "Close",
         style: TextStyle(
@@ -43,7 +43,9 @@ class Help extends StatelessWidget {
           inherit: false,
         ),
       ),
-      color: Colors.red.withAlpha(35),
+      style: TextButton.styleFrom(
+        primary: Colors.red.withAlpha(35),
+      ),
       onPressed: () {
         Navigator.of(context).pop();
       },
@@ -54,7 +56,7 @@ class Help extends StatelessWidget {
       elevation: 25,
       title: Text(
         "Help",
-        style: Theme.of(context).textTheme.title.copyWith(
+        style: Theme.of(context).textTheme.headline6!.copyWith(
               fontFamily: "Roboto Condensed",
               fontSize: 20,
             ),
@@ -63,7 +65,7 @@ class Help extends StatelessWidget {
         "Here goes help.",
         style: Theme.of(context)
             .textTheme
-            .display1
+            .headline4!
             .copyWith(fontFamily: "Eczar", fontSize: 16),
       ),
       contentTextStyle: TextStyle(color: Colors.black),

@@ -68,12 +68,12 @@ class Themes {
   static TextTheme _buildLightTextTheme(TextTheme base) {
     return base
         .copyWith(
-          body1: base.body1.copyWith(
+          bodyText2: base.bodyText2!.copyWith(
             fontFamily: 'Roboto Condensed',
             fontSize: 14,
             fontWeight: FontWeight.w400,
           ),
-          body2: base.body2.copyWith(
+          bodyText1: base.bodyText1!.copyWith(
             fontFamily: 'Eczar',
             fontSize: 40,
             fontWeight: FontWeight.w400,
@@ -83,48 +83,48 @@ class Themes {
                 blurRadius: 5,
                 color: Colors.black,
                 offset: Offset.lerp(
-                    Offset.fromDirection(5), Offset.fromDirection(-5), 3),
+                    Offset.fromDirection(5), Offset.fromDirection(-5), 3)!,
               ),
               Shadow(
                 blurRadius: 10,
                 color: Colors.black,
                 offset: Offset.lerp(
-                    Offset.fromDirection(5), Offset.fromDirection(-5), 3),
+                    Offset.fromDirection(5), Offset.fromDirection(-5), 3)!,
               ),
               Shadow(
                 blurRadius: 0,
                 color: Colors.black,
                 offset: Offset.lerp(
-                    Offset.fromDirection(5), Offset.fromDirection(-5), 2),
+                    Offset.fromDirection(5), Offset.fromDirection(-5), 2)!,
               ),
             ],
           ),
-          display1: base.display1.copyWith(
+          headline4: base.headline4!.copyWith(
             fontFamily: 'Eczar',
             fontSize: 30,
             fontWeight: FontWeight.w500,
           ),
-          display2: base.display2.copyWith(
+          headline3: base.headline3!.copyWith(
             fontFamily: 'Eczar',
             fontSize: 34,
             fontWeight: FontWeight.w500,
           ),
-          display3: base.display3.copyWith(
+          headline2: base.headline2!.copyWith(
             fontFamily: 'Eczar',
             fontSize: 20,
             fontWeight: FontWeight.w400,
           ),
-          display4: base.display4.copyWith(
+          headline1: base.headline1!.copyWith(
             fontFamily: 'Roboto Condensed',
             fontSize: 16,
             fontWeight: FontWeight.w400,
           ),
-          caption: base.caption.copyWith(
+          caption: base.caption!.copyWith(
             fontFamily: "Roboto Condensed",
             fontSize: 14,
             fontWeight: FontWeight.w700,
           ),
-          button: base.button.copyWith(
+          button: base.button!.copyWith(
             fontFamily: 'Roboto Condensed',
             fontWeight: FontWeight.w700,
             fontSize: 20,
@@ -134,29 +134,29 @@ class Themes {
                 blurRadius: 0,
                 color: Colors.black,
                 offset: Offset.lerp(
-                    Offset.fromDirection(0), Offset.fromDirection(-6), 8),
+                    Offset.fromDirection(0), Offset.fromDirection(-6), 8)!,
               ),
               Shadow(
                 blurRadius: 0,
                 color: Colors.black,
                 offset: Offset.lerp(
-                    Offset.fromDirection(0), Offset.fromDirection(-6), 9),
+                    Offset.fromDirection(0), Offset.fromDirection(-6), 9)!,
               ),
               Shadow(
                 blurRadius: 0,
                 color: Colors.black,
                 offset: Offset.lerp(
-                    Offset.fromDirection(0), Offset.fromDirection(-6), 10),
+                    Offset.fromDirection(0), Offset.fromDirection(-6), 10)!,
               ),
               Shadow(
                 blurRadius: 0,
                 color: Colors.black,
                 offset: Offset.lerp(
-                    Offset.fromDirection(0), Offset.fromDirection(-6), 11),
+                    Offset.fromDirection(0), Offset.fromDirection(-6), 11)!,
               ),
             ],
           ),
-          headline: base.body2.copyWith(
+          headline5: base.bodyText1!.copyWith(
             fontFamily: 'Eczar',
             fontSize: 40,
             fontWeight: FontWeight.w600,
@@ -172,12 +172,12 @@ class Themes {
   static TextTheme _buildDarkTextTheme(TextTheme base) {
     return base
         .copyWith(
-          body1: base.body1.copyWith(
+          bodyText2: base.bodyText2!.copyWith(
             fontFamily: 'Roboto Condensed',
             fontSize: 14,
             fontWeight: FontWeight.w400,
           ),
-          body2: base.body2.copyWith(
+          bodyText1: base.bodyText1!.copyWith(
             fontFamily: 'Eczar',
             fontSize: 40,
             fontWeight: FontWeight.w400,
@@ -187,48 +187,48 @@ class Themes {
                 blurRadius: 5,
                 color: Colors.black,
                 offset: Offset.lerp(
-                    Offset.fromDirection(5), Offset.fromDirection(-5), 3),
+                    Offset.fromDirection(5), Offset.fromDirection(-5), 3)!,
               ),
               Shadow(
                 blurRadius: 10,
                 color: Colors.black,
                 offset: Offset.lerp(
-                    Offset.fromDirection(5), Offset.fromDirection(-5), 3),
+                    Offset.fromDirection(5), Offset.fromDirection(-5), 3)!,
               ),
               Shadow(
                 blurRadius: 0,
                 color: Colors.black,
                 offset: Offset.lerp(
-                    Offset.fromDirection(5), Offset.fromDirection(-5), 3),
+                    Offset.fromDirection(5), Offset.fromDirection(-5), 3)!,
               ),
             ],
           ),
-          display1: base.display1.copyWith(
+          headline4: base.headline4!.copyWith(
             fontFamily: 'Eczar',
             fontSize: 30,
             fontWeight: FontWeight.w500,
           ),
-          display2: base.display2.copyWith(
+          headline3: base.headline3!.copyWith(
             fontFamily: 'Eczar',
             fontSize: 35,
             fontWeight: FontWeight.w500,
           ),
-          display3: base.display3.copyWith(
+          headline2: base.headline2!.copyWith(
             fontFamily: 'Eczar',
             fontSize: 20,
             fontWeight: FontWeight.w400,
           ),
-          display4: base.display4.copyWith(
+          headline1: base.headline1!.copyWith(
             fontFamily: 'Roboto Condensed',
             fontSize: 16,
             fontWeight: FontWeight.w400,
           ),
-          caption: base.caption.copyWith(
+          caption: base.caption!.copyWith(
             fontFamily: "Roboto Condensed",
             fontSize: 14,
             fontWeight: FontWeight.w700,
           ),
-          button: base.button.copyWith(
+          button: base.button!.copyWith(
             fontFamily: 'Roboto Condensed',
             fontWeight: FontWeight.w700,
             fontSize: 20,
@@ -238,29 +238,29 @@ class Themes {
                 blurRadius: 0,
                 color: Colors.black,
                 offset: Offset.lerp(
-                    Offset.fromDirection(0), Offset.fromDirection(-6), 8),
+                    Offset.fromDirection(0), Offset.fromDirection(-6), 8)!,
               ),
               Shadow(
                 blurRadius: 0,
                 color: Colors.black,
                 offset: Offset.lerp(
-                    Offset.fromDirection(0), Offset.fromDirection(-6), 9),
+                    Offset.fromDirection(0), Offset.fromDirection(-6), 9)!,
               ),
               Shadow(
                 blurRadius: 0,
                 color: Colors.black,
                 offset: Offset.lerp(
-                    Offset.fromDirection(0), Offset.fromDirection(-6), 10),
+                    Offset.fromDirection(0), Offset.fromDirection(-6), 10)!,
               ),
               Shadow(
                 blurRadius: 0,
                 color: Colors.black,
                 offset: Offset.lerp(
-                    Offset.fromDirection(0), Offset.fromDirection(-6), 11),
+                    Offset.fromDirection(0), Offset.fromDirection(-6), 11)!,
               ),
             ],
           ),
-          headline: base.body2.copyWith(
+          headline5: base.bodyText1!.copyWith(
             fontFamily: 'Eczar',
             fontSize: 40,
             fontWeight: FontWeight.w600,

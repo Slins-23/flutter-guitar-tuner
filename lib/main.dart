@@ -1,4 +1,5 @@
 import 'dart:convert';
+
 import "package:flutter/material.dart";
 import 'package:shared_preferences/shared_preferences.dart';
 import "package:tuner/widgets/navigation.dart";
@@ -13,14 +14,15 @@ import "package:tuner/settings/theme_changer.dart";
 import "package:tuner/settings/tuning_picker.dart";
 import "package:tuner/blocs/custom_tuning_bloc.dart";
 import "package:flutter_fft/flutter_fft.dart";
+import "package:tuner/extensions/custom_classes.dart";
 
 void main() async => {
       WidgetsFlutterBinding
           .ensureInitialized(), // Makes sure that all widgets are initialized before loading the data.
       await loadData(), // Loads the data.
       runApp(
+        // Widget that handles restarting the application, its state gets updated once the user clicks the reset settings to default button.
         RestartWidget(
-          // Widget that handles restarting the application, its state gets updated once the user clicks the reset settings to default button.
           child: App(),
         ),
       ),
@@ -51,33 +53,36 @@ loadData() async {
 
   final customTunings = prefs.getString(keys[6]) ?? CustomTuningBloc.tuning;
 
-  List<List<String>> finalCustomTunings = new List<List<String>>();
+  List<TuningList> finalCustomTunings = [];
 
   // Checks if the variable "customTunings" returns a json array, handle the custom tunings if it does.
-  if (customTunings.runtimeType == String) { 
-    final customTuningsJSON = jsonDecode(customTunings);
+  if (customTunings.runtimeType == String) {
+    final customTuningsJSON = jsonDecode(customTunings as String);
 
     for (int i = 0; i < customTuningsJSON.length; i++) {
       List<dynamic> currentTuning = customTuningsJSON['${i + 1}'];
-      finalCustomTunings.add(currentTuning.cast<String>().toList());
+      finalCustomTunings.add(TuningList(currentTuning.cast<String>().toList()));
     }
-  } 
-  // Otherwise, set it to the default value, which was already returned by "customTunings".
-  else {
-    finalCustomTunings = customTunings; 
+  } else {
+    // Otherwise, set it to the default value, which was already returned by "customTunings".
+    finalCustomTunings = customTunings as List<TuningList>;
   }
 
   // Sets number of channels in the plugin.
   globals.flutterFft.setNumChannels = numChannels;
+
   // Sets tolerance in the plugin. (How far apart can the frequency and target frequency be to be considered on pitch).
   globals.flutterFft.setTolerance = tolerance;
+
   // Sets calls to the API in "interval" time in the plugin.
   globals.flutterFft.setSubscriptionDuration = interval;
+
   // Sets sample rate in the plugin.
   globals.flutterFft.setSampleRate = sampleRate;
 
   // Sets current active tuning target in the plugin. (Which tuning the user is aiming for/selected in the settings, such as the standard tuning)
   globals.flutterFft.setTuning = tuning;
+
   ChannelsState.dropdownValue = numChannels;
   FrequencyToleranceState.sliderValue = tolerance;
   FrequencyToleranceState.textEditingController.text =
@@ -90,7 +95,8 @@ loadData() async {
   ThemeChanger.currentTheme = theme;
 
   // Tuning target set by the user.
-  TuningPickerState.dropdownValue = tuning;
+  TuningPickerState.dropdownValue = TuningList(tuning);
+
   // Available tuning settings, including default and user set.
   CustomTuningBloc.tuning = finalCustomTunings;
 }
@@ -98,8 +104,10 @@ loadData() async {
 resetData() async {
   // Resets data to default.
   final SharedPreferences prefs = await SharedPreferences.getInstance();
+
   // Clears shared preferences storage.
   await prefs.clear();
+
   // Instantiates the plugin, which has its own default settings. (The app's default settings are the same as the plugin's default settings)
   globals.flutterFft = new FlutterFft();
 
@@ -115,25 +123,25 @@ resetData() async {
   SampleRateState.textEditingController.text =
       globals.flutterFft.getSampleRate.toString();
   ThemeChanger.currentTheme = "dark";
-  TuningPickerState.dropdownValue = globals.flutterFft.getTuning;
+  TuningPickerState.dropdownValue = TuningList(globals.flutterFft.getTuning);
   final tempTuning = CustomTuningBloc.tuning[1];
-  CustomTuningBloc.tuning = new List<List<String>>();
+  CustomTuningBloc.tuning = [];
 
-  CustomTuningBloc.tuning.add(TuningPickerState.dropdownValue);
+  CustomTuningBloc.tuning.add(TuningPickerState.dropdownValue!);
   CustomTuningBloc.tuning.add(tempTuning);
 }
 
 // Widget responsible for restarting the application.
 class RestartWidget extends StatefulWidget {
-  RestartWidget({this.child});
+  RestartWidget({required this.child});
 
   final Widget child;
 
+  // When the application restarts (when the user clicks the reset button in this case), re-draw the application at the settings view.
   static void restartApp(BuildContext context) async {
-    // When the application restarts (when the user clicks the reset button in this case), re-draw the application at the settings view.
     initialTabIdx = 1;
     await resetData();
-    context.findAncestorStateOfType<_RestartWidgetState>().restartApp();
+    context.findAncestorStateOfType<_RestartWidgetState>()!.restartApp();
   }
 
   @override
@@ -156,9 +164,9 @@ class _RestartWidgetState extends State<RestartWidget> {
   }
 }
 
-// Application
 class App extends StatelessWidget {
-  
+  final Themes themes = new Themes();
+
   @override
   Widget build(BuildContext context) {
     return ChangeNotifierProvider<ThemeChangerBloc>(

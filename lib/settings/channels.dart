@@ -11,7 +11,7 @@ class Channels extends StatefulWidget {
 }
 
 class ChannelsState extends State<Channels> {
-  static int dropdownValue;
+  static int? dropdownValue;
 
   @override
   void initState() {
@@ -29,7 +29,7 @@ class ChannelsState extends State<Channels> {
               flex: 2,
               child: Text(
                 "Channels",
-                style: Theme.of(context).textTheme.display4,
+                style: Theme.of(context).textTheme.headline1,
               ),
             ),
             Expanded(
@@ -54,17 +54,17 @@ class ChannelsState extends State<Channels> {
                         ),
                         iconSize: 25,
                         elevation: 16,
-                        style: Theme.of(context).textTheme.display3.copyWith(
+                        style: Theme.of(context).textTheme.headline2!.copyWith(
                               color: Theme.of(context).primaryColor ==
                                       Themes.dark.primaryColor
                                   ? DarkTunerColors.gray
                                   : LightTunerColors.gray,
                               fontSize: 16,
                             ),
-                        onChanged: (int newValue) async {
+                        onChanged: (int? newValue) async {
                           setState(() => {
                                 dropdownValue = newValue,
-                                globals.flutterFft.setNumChannels = newValue,
+                                globals.flutterFft.setNumChannels = newValue!,
                               });
                           await _updateData();
                         },
@@ -78,7 +78,7 @@ class ChannelsState extends State<Channels> {
                                 value.toString(),
                                 style: Theme.of(context)
                                     .textTheme
-                                    .display3
+                                    .headline2!
                                     .copyWith(
                                       color: Theme.of(context).primaryColor ==
                                               Themes.dark.primaryColor
@@ -114,6 +114,6 @@ class ChannelsState extends State<Channels> {
   _updateData() async {
     final prefs = await SharedPreferences.getInstance();
     final key = "NumChannels";
-    prefs.setInt(key, dropdownValue);
+    prefs.setInt(key, dropdownValue!);
   }
 }

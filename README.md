@@ -29,7 +29,7 @@ Another reason is the bloatware and ADS in the application, which won't be in my
 
 I took that as an opportunity to program my first mobile application, specifically an android application at the moment, and learn Flutter/Dart in the process, which is something I have had in my mind for a couple of months.
 
-* I made some changes to Flutter's default widget "stepper.dart" at /flutter/packages/flutter/lib/src/material/stepper.dart - If you want to rebuild the code you will need to replace the original file with the one found in this repository, at this repository: "intricacies/flutter-widgets/stepper.dart"
+* I made some changes to Flutter's default widget "stepper.dart" at /flutter/packages/flutter/lib/src/material/stepper.dart - If you want to rebuild the app, you will need to replace the original file with the one found in this repository, at this folder: "intricacies/flutter-widgets/stepper.dart"
 
 ## Features
 
@@ -103,29 +103,26 @@ A relatively simple settings widget, which just like this app (at the moment), i
 
 ### Yet to implement
 
-#### Testing
-Tests are not yet implemented.
-
-#### Make a pretty UI, animations, improve usability
+1. Make a pretty UI, animations, improve usability
 
 The app is currently very raw, although usable. (Hence why I uploaded it, as it stands usable, and probably useful for someone else provided they intend to make something similar to this, by using this as a reference)
 
-#### iOS Version/Platform Channel
+2. iOS Version/Platform Channel
 
 Although flutter only has one dart codebase, I made my own custom plugin for this application, which uses a platform channel.
 
 Platform channels are programmed in native code. Since I only made the Java/Android version, the app has no functionality on iOS and does NOT work, as I still have to make the Objective-C/Swift version.
 Will implement this whenever I get back to this project.
 
-#### Web and desktop versions
+3. Web and desktop versions
 
 Make web and desktop versions of the applications.
 
-#### Rust + WebAssembly + Native JavaScript mobile framework
+4. Rust + WebAssembly + Native JavaScript mobile framework
 
 Possibly learn Rust, WebAssembly and a JS mobile framework, such as React Native / Vue Native to recreate the application.
 
-I find Flutter not very flexible and pretty restrictive in its current state. I also dislike its widget system, since it's extremely hard on the eyes, not very readable, too much identation/nesting, state management is also quite confusing.
+I find Flutter not very flexible and pretty restrictive in its current state. I also dislike its widget system, since it's extremely hard on the eyes, not very readable due to too much identation/nesting. State management is also quite confusing.
 
 It's not easy to make a very customized application with Flutter.
 
@@ -135,28 +132,30 @@ Rust (or C++) would play its part in the backend, handling all the processing fo
 
 Not only would this application be very flexible, but very portable as well.
 
-#### String-by-string Tuner
+5. String-by-string Tuner
 
 String-by-string version of the tuner. Currently only implemented one tuner, which is chromatic.
 
-#### Add more default tuning options
+6. Add more default tuning options
 
-The only tuning options currently is the standard tuning and a testing tuning.
+The only tuning options currently are the standard tuning and a testing tuning.
 
-#### Make my own pitch detector and improve algorithm speed
+7. Make my own pitch detector and improve algorithm speed
 
-Currently using an implementation from the "TarsosDSP" Java library, and my custom-made plugin that needs refactoring.
+Currently using an implementation from the "TarsosDSP" Java library, where there could be performance gains in many ways.
 
-#### Metronome
+8. Metronome
 
 Make a metronome.
 
-#### Improve theming and add custom-made user themes
+9. Improve theming and add custom-made user themes
 
-Allow users to create their own themes. Maybe in the future have an API to where users can share/download themes between themselves? - If everything goes as planned, this feature might be paid and not uploaded to this repository;
+Allow users to create their own themes.
 
 ## Bugs to fix
-1. When it's the first time the app is opened in the user's device, it does not start recording straight away, needing a restart to properly work;
-2. The settings that have both a slider and text fields as inputs are incosistent with each other;
-3. App randomly closes sometimes on the Android Emulator (haven't encountered this issue on the actual Android device);
-4. Haven't tested other emulators/devices for possible rendering and positioning issues, as well as hardware limitations;
+
+1. The settings that have both a slider and text fields as inputs are incosistent with each other;
+2. Haven't tested other emulators/devices for possible rendering and positioning issues, as well as hardware limitations
+3. Font doesn't render octaves greater than 4;
+4. When adding a new tuning containing too many strings/big letters, the dropdown button overflows
+5. Native stepper customization, currently relies on modifying a base Flutter dart file;

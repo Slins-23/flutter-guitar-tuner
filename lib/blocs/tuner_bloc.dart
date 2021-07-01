@@ -4,12 +4,17 @@ import 'package:tuner/extensions/tuner_extension.dart';
 import "package:tuner/extensions/globals.dart" as globals;
 
 class TunerBloc extends Bloc<TunerEvent, TunerState> {
+  StreamSubscription<List<Object>>? _flutterFftSubscription;
 
-  StreamSubscription<List<Object>> _flutterFftSubscription;
+  TunerBloc()
+      : super(Ready(
+            null, null, null, null, null, null, null, null, null, null, null));
 
+  /*
   @override
   TunerState get initialState =>
       Ready(null, null, null, null, null, null, null, null, null, null, null);
+  */
 
   @override
   Stream<TunerState> mapEventToState(TunerEvent event) async* {
@@ -40,10 +45,15 @@ class TunerBloc extends Bloc<TunerEvent, TunerState> {
         globals.flutterFft.getIsRecording);
     //flutterFft.setAndroidAudioSource = androidAudioSource;
 
+    while (!(await globals.flutterFft.checkPermission())) {
+      globals.flutterFft.requestPermission();
+      // IF DENY QUIT PROGRAM
+    }
 
     await globals.flutterFft.startRecorder();
     _flutterFftSubscription?.cancel();
-    _flutterFftSubscription = globals.flutterFft.onRecorderStateChanged.listen((data) {
+    _flutterFftSubscription =
+        globals.flutterFft.onRecorderStateChanged.listen((data) {
       add(Update(data));
     });
   }
@@ -63,26 +73,27 @@ class TunerBloc extends Bloc<TunerEvent, TunerState> {
         globals.flutterFft.getIsRecording);
     //flutterFft.setTolerance = update.data[0]; // TOLERANCE
 
-    globals.flutterFft.setFrequency = update.data[1];
+    globals.flutterFft.setFrequency = update.data[1] as double;
 
-    globals.flutterFft.setNote = update.data[2];
-    globals.flutterFft.setTarget = update.data[3];
-    globals.flutterFft.setDistance = update.data[4];
-    globals.flutterFft.setOctave = update.data[5];
+    globals.flutterFft.setNote = update.data[2] as String;
+    globals.flutterFft.setTarget = update.data[3] as double;
+    globals.flutterFft.setDistance = update.data[4] as double;
+    globals.flutterFft.setOctave = update.data[5] as int;
 
-    globals.flutterFft.setNearestNote = update.data[6];
-    globals.flutterFft.setNearestTarget = update.data[7];
-    globals.flutterFft.setNearestDistance = update.data[8];
-    globals.flutterFft.setNearestOctave = update.data[9];
+    globals.flutterFft.setNearestNote = update.data[6] as String;
+    globals.flutterFft.setNearestTarget = update.data[7] as double;
+    globals.flutterFft.setNearestDistance = update.data[8] as double;
+    globals.flutterFft.setNearestOctave = update.data[9] as int;
 
-    globals.flutterFft.setIsOnPitch = update.data[10];
+    globals.flutterFft.setIsOnPitch = update.data[10] as bool;
   }
 
   Stream<TunerState> _mapStopToState(Stop stop) async* {
     if (state is Running) {
       await globals.flutterFft.stopRecorder();
       _flutterFftSubscription?.cancel();
-      yield this.initialState;
+      yield Ready(
+          null, null, null, null, null, null, null, null, null, null, null);
     }
   }
 

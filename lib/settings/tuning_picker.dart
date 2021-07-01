@@ -6,6 +6,7 @@ import 'package:tuner/colors/light_colors.dart';
 import "package:tuner/extensions/globals.dart" as globals;
 import "package:shared_preferences/shared_preferences.dart";
 import "package:tuner/blocs/custom_tuning_bloc.dart";
+import "package:tuner/extensions/custom_classes.dart";
 
 class TuningPicker extends StatefulWidget {
   @override
@@ -13,11 +14,37 @@ class TuningPicker extends StatefulWidget {
 }
 
 class TuningPickerState extends State<TuningPicker> {
-  static List<String> dropdownValue;
+  static TuningList? dropdownValue;
 
   @override
   void initState() {
     super.initState();
+  }
+
+  List<DropdownMenuItem<TuningList>> generateItems(
+      CustomTuningBloc customTuningBloc) {
+    return customTuningBloc.getTuning.map((TuningList tuning) {
+      return DropdownMenuItem<TuningList>(
+        value: tuning,
+        child: Container(
+          decoration: BoxDecoration(
+            color: Theme.of(context).inputDecorationTheme.fillColor,
+          ),
+          child: Center(
+            child: Text(
+              parseDisplay(tuning.getList),
+              style: Theme.of(context).textTheme.headline2!.copyWith(
+                    color: Theme.of(context).primaryColor ==
+                            Themes.dark.primaryColor
+                        ? DarkTunerColors.gray
+                        : LightTunerColors.gray,
+                    fontSize: 19,
+                  ),
+            ),
+          ),
+        ),
+      );
+    }).toList();
   }
 
   @override
@@ -25,6 +52,29 @@ class TuningPickerState extends State<TuningPicker> {
     final CustomTuningBloc customTuningBloc =
         Provider.of<CustomTuningBloc>(context);
 
+    List<DropdownMenuItem<TuningList>> menuItems =
+        generateItems(customTuningBloc);
+
+    // TuningList newDrop = dropdownValue!;
+    // TuningList newDropMenuItem =
+    //     menuItems.map((item) => item.value).toList()[0]!;
+
+    // print("Dropdown value: $dropdownValue");
+    // print("Dropdownmenuitem value: ${newDropMenuItem}");
+    // print("Menu items: ${menuItems.map((item) => item.value).toList()}");
+    // print("Equal: ${newDrop == newDropMenuItem}");
+    // print("Other eq: ${listEquals(newDrop, newDropMenuItem)}");
+
+    // print("Items: ${customTuningBloc.getTuning[0]}");
+    // print(
+    //     "Types: d - ${dropdownValue.runtimeType} | c - ${customTuningBloc.getTuning[0].runtimeType}");
+    // // print("Parsed value: ${parseDisplay(dropdownValue!)}");
+    // print("Tunings: ${customTuningBloc.getTuning}");
+    // print("Equal: ${customTuningBloc.getTuning[0] == dropdownValue}");
+
+    // print("Equal types?: ${dropdownValue! == customTuningBloc.getTuning[0]}");
+
+    // print("Equal: ${tst == dropdownValue}");
     return Container(
       child: Padding(
         padding: const EdgeInsets.only(left: 8.0),
@@ -34,30 +84,34 @@ class TuningPickerState extends State<TuningPicker> {
               flex: 3,
               child: Text(
                 "Tuning target",
-                style: Theme.of(context).textTheme.display4,
+                style: Theme.of(context).textTheme.headline1,
               ),
             ),
             Expanded(
-              flex: 10,
+              flex: 11,
               child: Align(
-                alignment: FractionalOffset.center,
-                child: Padding(
-                  padding: EdgeInsets.only(left: 125),
-                  child: Container(
-                    decoration: BoxDecoration(
-                      borderRadius: BorderRadius.circular(5),
-                      color: Theme.of(context).inputDecorationTheme.fillColor,
-                    ),
-                    height: 35,
-                    padding: EdgeInsets.only(left: 8.0),
-                    child: DropdownButtonHideUnderline(
-                      child: DropdownButton<List<String>>(
+                // alignment: FractionalOffset.center,
+                child: Container(
+                  decoration: BoxDecoration(
+                    borderRadius: BorderRadius.circular(5),
+                    color: Theme.of(context).inputDecorationTheme.fillColor,
+                  ),
+                  height: 35,
+                  width: 300,
+                  padding: EdgeInsets.only(left: 12.0),
+                  child: DropdownButtonHideUnderline(
+                    child: Center(
+                      child: DropdownButton<TuningList?>(
                         value: dropdownValue,
-                        hint: Text(
-                          parseDisplay(dropdownValue),
-                          style: Theme.of(context).textTheme.display3.copyWith(
-                                color: DarkTunerColors.gray,
-                              ),
+                        hint: Center(
+                          child: Text(
+                            parseDisplay(dropdownValue!.getList),
+                            style:
+                                Theme.of(context).textTheme.headline2!.copyWith(
+                                      color: DarkTunerColors.gray,
+                                      // fontFamily: "Arial",
+                                    ),
+                          ),
                         ),
                         icon: Icon(
                           Icons.arrow_drop_down,
@@ -65,40 +119,16 @@ class TuningPickerState extends State<TuningPicker> {
                         ),
                         iconSize: 25,
                         elevation: 16,
-                        onChanged: (List<String> newValue) async {
+                        onChanged: (TuningList? newValue) async {
                           setState(() => {
-                                globals.flutterFft.setTuning = newValue,
+                                globals.flutterFft.setTuning =
+                                    newValue!.getList,
                                 dropdownValue = newValue,
                               });
                           await _updateData();
                         },
                         iconEnabledColor: Colors.black,
-                        items: customTuningBloc.getTuning
-                            .map((List<String> tuning) {
-                          return DropdownMenuItem<List<String>>(
-                            value: tuning,
-                            child: Container(
-                              decoration: BoxDecoration(
-                                color: Theme.of(context)
-                                    .inputDecorationTheme
-                                    .fillColor,
-                              ),
-                              child: Text(
-                                parseDisplay(tuning),
-                                style: Theme.of(context)
-                                    .textTheme
-                                    .display3
-                                    .copyWith(
-                                      color: Theme.of(context).primaryColor ==
-                                              Themes.dark.primaryColor
-                                          ? DarkTunerColors.gray
-                                          : LightTunerColors.gray,
-                                      fontSize: 19,
-                                    ),
-                              ),
-                            ),
-                          );
-                        }).toList(),
+                        items: menuItems,
                       ),
                     ),
                   ),
@@ -123,23 +153,24 @@ class TuningPickerState extends State<TuningPicker> {
   _updateData() async {
     final prefs = await SharedPreferences.getInstance();
     final key = "Tuning";
-    await prefs.setStringList(key, dropdownValue);
+    await prefs.setStringList(key, dropdownValue!.getList);
   }
 
   String parseDisplay(List<String> value) {
     String newStr = "";
 
-    if (value.length > 1) {
-      for (String note in value) {
-        String newNote = note[0] + octaveToSuperscript(note[1]);
-        if (note == value[value.length - 1]) {
-          newStr += newNote;
-        } else {
-          newStr += "$newNote ";
-        }
+    for (String note in value) {
+      if (note.length == 2) {
+        newStr += note[0] + octaveToSuperscript(note[1]);
+      } else if (note.length == 3) {
+        newStr += note[0] + note[1] + octaveToSuperscript(note[2]);
+      } else {
+        throw "Wrong note";
       }
-    } else {
-      newStr = value[0];
+
+      if (note != value[value.length - 1]) {
+        newStr += " ";
+      }
     }
 
     return newStr;
@@ -148,7 +179,6 @@ class TuningPickerState extends State<TuningPicker> {
   static String octaveToSuperscript(String octave) {
     //SUPERSCRIPT: ¹²³⁴⁵⁶⁷⁸⁹
     //SUBSCRIPT: ₁₂₃₄₅₆₇₈₉
-
     switch (octave) {
       case "1":
         return "¹";

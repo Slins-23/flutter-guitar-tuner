@@ -12,7 +12,7 @@ class SampleRate extends StatefulWidget {
 }
 
 class SampleRateState extends State<SampleRate> {
-  static int sliderValue;
+  static int? sliderValue;
   static TextEditingController textEditingController =
       new TextEditingController();
 
@@ -32,7 +32,7 @@ class SampleRateState extends State<SampleRate> {
               flex: 5,
               child: Text(
                 "Sample Rate",
-                style: Theme.of(context).textTheme.display4,
+                style: Theme.of(context).textTheme.headline1,
               ),
             ),
             Flexible(
@@ -48,14 +48,13 @@ class SampleRateState extends State<SampleRate> {
                 }, // UPDATE HERE
                 onChangeEnd: (_) async {
                   setState(
-                      () => globals.flutterFft.setSampleRate = sliderValue);
+                      () => globals.flutterFft.setSampleRate = sliderValue!);
                   await _updateData();
                 },
-                value: sliderValue.toDouble(), // SET NEW VALUE HERE
+                value: sliderValue!.toDouble(), // SET NEW VALUE HERE
                 max: 50000,
                 min: 0,
-                activeColor:
-                    Theme.of(context).cardColor,
+                activeColor: Theme.of(context).cardColor,
                 inactiveColor: Theme.of(context).canvasColor,
               ),
             ),
@@ -75,13 +74,13 @@ class SampleRateState extends State<SampleRate> {
                     onSubmitted: (text) async => {
                       setState(() => {
                             sliderValue = int.parse(text),
-                            globals.flutterFft.setSampleRate = sliderValue,
+                            globals.flutterFft.setSampleRate = sliderValue!,
                           }),
                       await _updateDataString(),
                     },
                     maxLength: 5,
                     textAlign: TextAlign.center,
-                    style: Theme.of(context).textTheme.display3.copyWith(
+                    style: Theme.of(context).textTheme.headline2!.copyWith(
                           color: Theme.of(context).primaryColor ==
                                   Themes.dark.primaryColor
                               ? DarkTunerColors.gray
@@ -89,7 +88,7 @@ class SampleRateState extends State<SampleRate> {
                           fontSize: 16,
                         ),
                     inputFormatters: <TextInputFormatter>[
-                      WhitelistingTextInputFormatter.digitsOnly,
+                      FilteringTextInputFormatter.digitsOnly,
                     ],
                     keyboardType: TextInputType.numberWithOptions(
                         decimal: false, signed: false),
@@ -118,12 +117,12 @@ class SampleRateState extends State<SampleRate> {
   _updateData() async {
     final prefs = await SharedPreferences.getInstance();
     final key = "SampleRate";
-    await prefs.setInt(key, sliderValue);
+    await prefs.setInt(key, sliderValue!);
   }
 
   _updateDataString() async {
     final prefs = await SharedPreferences.getInstance();
     final key = "SampleRate";
-    await prefs.setInt(key, sliderValue);
+    await prefs.setInt(key, sliderValue!);
   }
 }
